@@ -1,15 +1,14 @@
-import java.util.Arrays;
-import java.util.Scanner;
-import java.util.Random;
-import java.util.InputMismatchException;
+import java.util.*;
 
 public class App {
     private Aposta aposta;
     private Scanner sc;
+    private ArrayList<Integer> numeros;
 
     public App() {
         aposta = new Aposta();
         sc = new Scanner(System.in);
+        numeros = new ArrayList<Integer>();
     }
 
     Random gerar = new Random();
@@ -30,6 +29,10 @@ public class App {
                     break;
                 case 3:
                     aposta.consultarDados();
+                    contagemNum(numeros);
+                    //for (int i = 0; i < numeros.size(); i++){
+                    //    System.out.println(numeros.get(i));
+                    //}
                     break;
                 case 4:
                     sorteio();
@@ -45,7 +48,9 @@ public class App {
             System.out.println("\n");
         }
     }
-   //Método que cria o menu de opções
+
+
+    //Método que cria o menu de opções
     public void menu(){
         System.out.println("Bem vindo(a) à fase de apostas.\nEscolha uma das opções disponíveis.");
         System.out.println("[1] Realizar uma aposta normal (escolhendo os cinco números).");
@@ -59,18 +64,20 @@ public class App {
     //Os números apostados devem estar entre 1 e 50 e não podem ser repetidos
     public void apostaNormal(){
         int[] num = new int[5];
-        System.out.println("Digite seu nome.");
+        System.out.println("Digite seu nome completo.");
         String nome = sc.nextLine();
-        System.out.println("Digite seu CPF utilizando apenas números (sem os caracteres especiais)");
+        System.out.println("Digite seu CPF.");
         String CPF = sc.nextLine();
-        aposta.isCPF(CPF);
+
 
         System.out.println("Digite o primeiro número.");
         num[0] = sc.nextInt();
+        numeros.add(num[0]);
         while (num[0]< 0 || num[0] > 50) {
             System.out.println("Número inválido. Digite um número de 1 a 50.");
             num[0] = sc.nextInt();
         }
+
         System.out.println("Digite o segundo número.");
         num[1] = sc.nextInt();
         while (num[1]< 0 || num[1] > 50) {
@@ -83,6 +90,8 @@ public class App {
                 num[1] = sc.nextInt();
             }
         }
+        numeros.add(num[1]);
+
         System.out.println("Digite o terceiro número.");
         num[2] = sc.nextInt();
         while (num[2]< 0 || num[2] > 50) {
@@ -91,10 +100,12 @@ public class App {
         }
         if (num[2] == num[1] || num[2] == num[0]){
             while (num[2] == num[1] || num[2] == num[0]){
-                System.out.println("Número inválido. Digite um número de 1 a 50.");
+                System.out.println("Número repetido. Digite um número diferente");
                 num[2] = sc.nextInt();
             }
         }
+        numeros.add(num[2]);
+
         System.out.println("Digite o quarto número.");
         num[3] = sc.nextInt();
         while (num[3]< 0 || num[3] > 50) {
@@ -103,10 +114,11 @@ public class App {
         }
         if (num[3] == num[0] || num[3] == num[1] || num[3] == num[2]) {
             while (num[3] == num[0] || num[3] == num[1] || num[3] == num[2]){
-                System.out.println("Número inválido. Digite um número de 1 a 50.");
+                System.out.println("Número repetido. Digite um número diferente");
                 num[3] = sc.nextInt();
             }
         }
+        numeros.add(num[3]);
 
         System.out.println("Digite o quinto número.");
         num[4] = sc.nextInt();
@@ -116,14 +128,30 @@ public class App {
         }
         if (num[4] == num[0] || num[4] == num[1] || num[4] == num[2] || num[4] == num[3]){
             while(num[4] == num[0] || num[4] == num[1] || num[4] == num[2] || num[4] == num[3]){
-                System.out.println("Número inválido. Digite um número de 1 a 50.");
+                System.out.println("Número repetido. Digite um número diferente");
                 num[4] = sc.nextInt();
             }
         }
+        numeros.add(num[4]);
+
         sc.nextLine();
+        System.out.println("Confira se suas informações pessoais estão corretas.");
+        System.out.println("Nome: "+nome+"\nCPF: "+CPF);
+        System.out.println("[1] Sim, estão corretas.\n[2]Não, digitar novemente.");
+        int opcao2 = sc.nextInt();
+        sc.nextLine();
+        switch (opcao2){
+            case 1:
+                break;
+            case 2:
+                System.out.println("Digite seu nome completo.");
+                nome = sc.nextLine();
+                System.out.println("Digite seu CPF.");
+                CPF = sc.nextLine();
+                break;
+        }
 
         Apostador a = new Apostador(nome, CPF, num);
-        aposta.setarCPF(CPF, a);
         aposta.realizarAposta(a);
         System.out.println("Aposta realizada!");
         System.out.println("Apostador: "+a.getNome());
@@ -135,46 +163,57 @@ public class App {
     //Também verifica se os números não se repetem. Caso seja gerado um número repetido, ele será sorteado novamente.
     public void apostaSurpresa(){
         int[] num = new int[5];
-        System.out.println("Digite seu nome.");
+        System.out.println("Digite seu nome completo.");
         String nome = sc.nextLine();
-        System.out.println("Digite seu CPF utilizando apenas números (sem os caracteres especiais)");
+        System.out.println("Digite seu CPF.");
         String CPF = sc.nextLine();
-        if (aposta.isCPF(CPF)){
-            CPF = CPF;
-        } else {
-            while(!aposta.isCPF(CPF)){
-                System.out.println("Número de CPF inválido. Por favor, digite um CPF válido.");
-                CPF = sc.nextLine();
-            }
-        }
         num[0] = gerar.nextInt(51);
+        numeros.add(num[0]);
         num[1] = gerar.nextInt(51);
         if (num[1] == num[0]){
             while (num[1] == num [0]){
                 num[1] = gerar.nextInt(51);
             }
         }
+        numeros.add(num[1]);
         num[2] = gerar.nextInt(51);
         if (num[2] == num[1] || num[2] == num[0]){
             while (num[2] == num[1] || num[2] == num[0]){
                 num[2] = gerar.nextInt(51);
             }
         }
+        numeros.add(num[2]);
         num[3] = gerar.nextInt(51);
         if (num[3] == num[0] || num[3] == num[1] || num[3] == num[2]) {
             while (num[3] == num[0] || num[3] == num[1] || num[3] == num[2]){
                 num[3] = gerar.nextInt(51);
             }
         }
+        numeros.add(num[3]);
         num[4] = gerar.nextInt(51);
         if (num[4] == num[0] || num[4] == num[1] || num[4] == num[2] || num[4] == num[3]){
             while(num[4] == num[0] || num[4] == num[1] || num[4] == num[2] || num[4] == num[3]){
                 num[4] = gerar.nextInt(51);
             }
         }
+        numeros.add(num[4]);
+        System.out.println("Confira se suas informações pessoais estão corretas.");
+        System.out.println("Nome: "+nome+"\nCPF: "+CPF);
+        System.out.println("[1] Sim, estão corretas.\n[2]Não, digitar novemente.");
+        int opcao2 = sc.nextInt();
+        sc.nextLine();
+        switch (opcao2){
+            case 1:
+                break;
+            case 2:
+                System.out.println("Digite seu nome completo.");
+                nome = sc.nextLine();
+                System.out.println("Digite seu CPF.");
+                CPF = sc.nextLine();
+                break;
+        }
 
         Apostador a = new Apostador(nome, CPF, num);
-        aposta.setarCPF(CPF, a);
         aposta.realizarAposta(a);
         System.out.println("Aposta realizada!");
         System.out.println("Apostador: "+a.getNome());
@@ -217,10 +256,29 @@ public class App {
         resultado = new Resultado(num);
     }
 
-    //public void
 
-    public void finalizar(){
-
+    //Método que vai contar as repetições dos números apostados
+    //Referência para a criação do método https://www.paradoxofinal.com.br/2011/06/arrays-elementos-repetidos-e-numero-de.html. Acesso em 19/03/2024
+    private boolean encontrou;
+    public void contagemNum(ArrayList <Integer> n){
+        ArrayList<Numeros> lista = new ArrayList<Numeros>();
+        for (int i = 0; i< n.size(); i++){
+            encontrou = false;
+            for (int j = 0; j < lista.size(); j++){
+                if (n.get(i).equals(lista.get(j))){
+                    lista.get(j).cont++;
+                    encontrou = true;
+                    break;
+                }
+            }
+            if (!encontrou){
+                lista.add(new Numeros(n.get(i), 1));
+            }
+        }
+        System.out.println("[Número, Repetições]");
+        for(Numeros n1 : lista){
+            System.out.println("[" + n1.valor + ", " + n1.cont + "]");
+        }
     }
 
 

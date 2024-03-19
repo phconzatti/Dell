@@ -47,12 +47,10 @@ public class Apostador {
 
     @Override
     public String toString() {
-        return "Apostador{" +
-                "nome='" + nome + '\'' +
-                ", cpf='" + cpf + '\'' +
-                ", aposta=" + Arrays.toString(aposta) +
-                ", registro=" + registro +
-                '}';
+        return "Nome: " + nome +
+                "\nCPF: " + cpf +
+                "\nAposta: " + Arrays.toString(aposta) +
+                "\nNúmero de registro: " + registro+"\n";
     }
 }
 
