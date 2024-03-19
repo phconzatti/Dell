@@ -1,5 +1,5 @@
 import java.util.*;
-
+import java.util.ArrayList;
 public class App {
     private Aposta aposta;
     private Scanner sc;
@@ -168,31 +168,34 @@ public class App {
         System.out.println("Digite seu CPF.");
         String CPF = sc.nextLine();
         num[0] = gerar.nextInt(51);
+            while (num[0] == 0){
+                num[0] = gerar.nextInt(51);
+            }
         numeros.add(num[0]);
         num[1] = gerar.nextInt(51);
         if (num[1] == num[0]){
-            while (num[1] == num [0]){
+            while (num[1] == num [0] || num [1] == 0){
                 num[1] = gerar.nextInt(51);
             }
         }
         numeros.add(num[1]);
         num[2] = gerar.nextInt(51);
         if (num[2] == num[1] || num[2] == num[0]){
-            while (num[2] == num[1] || num[2] == num[0]){
+            while (num[2] == num[1] || num[2] == num[0] || num[2] == 0){
                 num[2] = gerar.nextInt(51);
             }
         }
         numeros.add(num[2]);
         num[3] = gerar.nextInt(51);
         if (num[3] == num[0] || num[3] == num[1] || num[3] == num[2]) {
-            while (num[3] == num[0] || num[3] == num[1] || num[3] == num[2]){
+            while (num[3] == num[0] || num[3] == num[1] || num[3] == num[2] || num[3] == 0){
                 num[3] = gerar.nextInt(51);
             }
         }
         numeros.add(num[3]);
         num[4] = gerar.nextInt(51);
         if (num[4] == num[0] || num[4] == num[1] || num[4] == num[2] || num[4] == num[3]){
-            while(num[4] == num[0] || num[4] == num[1] || num[4] == num[2] || num[4] == num[3]){
+            while(num[4] == num[0] || num[4] == num[1] || num[4] == num[2] || num[4] == num[3] || num[4] == 0){
                 num[4] = gerar.nextInt(51);
             }
         }
@@ -261,11 +264,16 @@ public class App {
     //Referência para a criação do método https://www.paradoxofinal.com.br/2011/06/arrays-elementos-repetidos-e-numero-de.html. Acesso em 19/03/2024
     private boolean encontrou;
     public void contagemNum(ArrayList <Integer> n){
-        ArrayList<Numeros> lista = new ArrayList<Numeros>();
+        ArrayList<Numeros> lista = new ArrayList<Numeros>(50);
+        for (int k = 1; k <= 50; k++) {
+            Numeros n1 = new Numeros(k, 0);
+            lista.add(n1);
+        }
         for (int i = 0; i< n.size(); i++){
             encontrou = false;
             for (int j = 0; j < lista.size(); j++){
-                if (n.get(i).equals(lista.get(j))){
+                //lista.get(j).setValor(j);
+                if (n.get(i).equals(lista.get(j).getValor())){
                     lista.get(j).cont++;
                     encontrou = true;
                     break;
@@ -275,8 +283,10 @@ public class App {
                 lista.add(new Numeros(n.get(i), 1));
             }
         }
+        lista.sort(Comparator.comparing(Numeros:: getCont).reversed());
         System.out.println("[Número, Repetições]");
         for(Numeros n1 : lista){
+
             System.out.println("[" + n1.valor + ", " + n1.cont + "]");
         }
     }
