@@ -4,7 +4,7 @@ import java.util.InputMismatchException;
 public class Apostador {
     private String nome, cpf;
     private int[] aposta = new int[5];
-    private int registro;
+    private int registro, acertos;
 
     //Construtor de Apostador, que registra os dados da pessoa e a aposta realizada.
     public Apostador(String nome, String cpf, int[] aposta) {
@@ -43,6 +43,14 @@ public class Apostador {
 
     public void setRegistro(int registro) {
         this.registro = registro;
+    }
+
+    public int getAcertos(){
+        return acertos;
+    }
+
+    public void setAcertos(int acertos){
+        this.acertos = acertos;
     }
 
     @Override

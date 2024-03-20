@@ -1,5 +1,6 @@
 import java.util.*;
 import java.util.ArrayList;
+
 public class App {
     private Aposta aposta;
     private Scanner sc;
@@ -15,6 +16,7 @@ public class App {
 
     //Menu
     public void executar(){
+        System.out.println("\nInício de uma nova fase de apostas.");
        menu();
         int opcao = sc.nextInt();
         sc.nextLine();
@@ -30,12 +32,9 @@ public class App {
                 case 3:
                     aposta.consultarDados();
                     contagemNum(numeros);
-                    //for (int i = 0; i < numeros.size(); i++){
-                    //    System.out.println(numeros.get(i));
-                    //}
                     break;
                 case 4:
-                    sorteio();
+                    sorteio(aposta);
                     break;
                 case 0:
                     break;
@@ -52,7 +51,7 @@ public class App {
 
     //Método que cria o menu de opções
     public void menu(){
-        System.out.println("Bem vindo(a) à fase de apostas.\nEscolha uma das opções disponíveis.");
+        System.out.println("\nEscolha uma das opções disponíveis.");
         System.out.println("[1] Realizar uma aposta normal (escolhendo os cinco números).");
         System.out.println("[2] Realizar uma aposta surpresa (os cinco números são aleatórios).");
         System.out.println("[3] Consultar os dados das apostas já registradas.");
@@ -135,9 +134,9 @@ public class App {
         numeros.add(num[4]);
 
         sc.nextLine();
-        System.out.println("Confira se suas informações pessoais estão corretas.");
+        System.out.println("\nConfira se suas informações pessoais estão corretas e selecione uma das opções disponíveis.");
         System.out.println("Nome: "+nome+"\nCPF: "+CPF);
-        System.out.println("[1] Sim, estão corretas.\n[2]Não, digitar novemente.");
+        System.out.println("\n[1] Sim, estão corretas.\n[2]Não, digitar novemente.");
         int opcao2 = sc.nextInt();
         sc.nextLine();
         switch (opcao2){
@@ -159,7 +158,9 @@ public class App {
         System.out.println("Números apostados: "+Arrays.toString(num));
         System.out.println("\n=========================");
     }
-     //Método para a aposta surpresa
+
+
+    //Método para a aposta surpresa
     //Também verifica se os números não se repetem. Caso seja gerado um número repetido, ele será sorteado novamente.
     public void apostaSurpresa(){
         int[] num = new int[5];
@@ -173,36 +174,36 @@ public class App {
             }
         numeros.add(num[0]);
         num[1] = gerar.nextInt(51);
-        if (num[1] == num[0]){
+        if (num[1] == num[0] || num [1] == 0){
             while (num[1] == num [0] || num [1] == 0){
                 num[1] = gerar.nextInt(51);
             }
         }
         numeros.add(num[1]);
         num[2] = gerar.nextInt(51);
-        if (num[2] == num[1] || num[2] == num[0]){
+        if (num[2] == num[1] || num[2] == num[0] || num[2] == 0){
             while (num[2] == num[1] || num[2] == num[0] || num[2] == 0){
                 num[2] = gerar.nextInt(51);
             }
         }
         numeros.add(num[2]);
         num[3] = gerar.nextInt(51);
-        if (num[3] == num[0] || num[3] == num[1] || num[3] == num[2]) {
+        if (num[3] == num[0] || num[3] == num[1] || num[3] == num[2] || num[3] == 0) {
             while (num[3] == num[0] || num[3] == num[1] || num[3] == num[2] || num[3] == 0){
                 num[3] = gerar.nextInt(51);
             }
         }
         numeros.add(num[3]);
         num[4] = gerar.nextInt(51);
-        if (num[4] == num[0] || num[4] == num[1] || num[4] == num[2] || num[4] == num[3]){
+        if (num[4] == num[0] || num[4] == num[1] || num[4] == num[2] || num[4] == num[3] || num[4] == 0){
             while(num[4] == num[0] || num[4] == num[1] || num[4] == num[2] || num[4] == num[3] || num[4] == 0){
                 num[4] = gerar.nextInt(51);
             }
         }
         numeros.add(num[4]);
-        System.out.println("Confira se suas informações pessoais estão corretas.");
+        System.out.println("\nConfira se suas informações pessoais estão corretas e selecione uma das opções disponíveis.");
         System.out.println("Nome: "+nome+"\nCPF: "+CPF);
-        System.out.println("[1] Sim, estão corretas.\n[2]Não, digitar novemente.");
+        System.out.println("\n[1] Sim, estão corretas.\n[2]Não, digitar novemente.");
         int opcao2 = sc.nextInt();
         sc.nextLine();
         switch (opcao2){
@@ -226,38 +227,82 @@ public class App {
         System.out.println("\n=========================");
     }
 
+
     //Método que realiza o sorteio dos números vencedores
     //O resultado pode possuir números repetidos, ou seja, os números são aleatórios e não serão sorteados novamente
-    public void sorteio(){
-        Resultado resultado;
-        int[] num = new int[5];
-        num[0] = gerar.nextInt(51);
-        num[1] = gerar.nextInt(51);
-        if (num[1] == num[0]){
-            while (num[1] == num [0]){
-                num[1] = gerar.nextInt(51);
+    public void sorteio(Aposta a){
+        //ArrayList <Integer> resultado = new ArrayList<Integer>();
+        ArrayList <Apostador> vencedores = new ArrayList<Apostador>();
+        int[] result = new int[25];
+        //int[] result = new int[5];
+        result[0] = gerar.nextInt(51);
+        while (result[0] == 0){
+            result[0] = gerar.nextInt(51);
+        }
+
+
+        result[1] = gerar.nextInt(51);
+        if (result[1] == result[0] || result[1] == 0){
+            while (result[1] == result [0] || result[1] == 0){
+                result[1] = gerar.nextInt(51);
             }
         }
-        num[2] = gerar.nextInt(51);
-        if (num[2] == num[1] || num[2] == num[0]){
-            while (num[2] == num[1] || num[2] == num[0]){
-                num[2] = gerar.nextInt(51);
+
+
+        result[2] = gerar.nextInt(51);
+        if (result[2] == result[1] || result[2] == result[0] || result[2] == 0){
+            while (result[2] == result[1] || result[2] == result[0] || result[2] == 0){
+                result[2] = gerar.nextInt(51);
             }
         }
-        num[3] = gerar.nextInt(51);
-        if (num[3] == num[0] || num[3] == num[1] || num[3] == num[2]) {
-            while (num[3] == num[0] || num[3] == num[1] || num[3] == num[2]){
-                num[3] = gerar.nextInt(51);
+
+
+        result[3] = gerar.nextInt(51);
+        if (result[3] == result[0] || result[3] == result[1] || result[3] == result[2] || result[3] == 0) {
+            while (result[3] == result[0] || result[3] == result[1] || result[3] == result[2] || result[3] == 0){
+                result[3] = gerar.nextInt(51);
             }
         }
-        num[4] = gerar.nextInt(51);
-        if (num[4] == num[0] || num[4] == num[1] || num[4] == num[2] || num[4] == num[3]){
-            while(num[4] == num[0] || num[4] == num[1] || num[4] == num[2] || num[4] == num[3]){
-                num[4] = gerar.nextInt(51);
+
+
+        result[4] = gerar.nextInt(51);
+        if (result[4] == result[0] || result[4] == result[1] || result[4] == result[2] || result[4] == result[3] || result[4] == 0){
+            while(result[4] == result[0] || result[4] == result[1] || result[4] == result[2] || result[4] == result[3] || result[4] == 0){
+                result[4] = gerar.nextInt(51);
             }
         }
-        resultado = new Resultado(num);
+        result[0] = 1;
+        result[1] = 2;
+                result[2] = 3;
+                        result[3] = 4;
+                                result[4] =5;
+        ArrayList<Apostador> vencedor = new ArrayList<Apostador>();
+        System.out.println("Números sorteados: "+ Arrays.toString(result));
+        int quant = 0;
+        for (int i = 0; i <aposta.compararAposta().size(); i++) {
+            int [] b = aposta.compararAposta().get(i).getAposta();
+            for (int j = 0; j < b.length; j++){
+                for (int k = 0; k < result.length; k++){
+                    if (b[i] == result[k]){
+                        quant++;
+                    }
+                }
+            }
+            if (quant == 5){
+                vencedor.add(aposta.compararAposta().get(i));
+            }
+
+
+        }
+        if(vencedor.isEmpty()){
+            System.out.println("Não há vencedores.");
+        }else {
+            System.out.println("Vencedores"+vencedor);
+        }
+
     }
+
+
 
 
     //Método que vai contar as repetições dos números apostados

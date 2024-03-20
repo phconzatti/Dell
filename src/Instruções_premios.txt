@@ -1,0 +1,8 @@
+Regras para o recebimento do prêmio:
+
+O prêmio é um "Dell Inspiron 15" para cada vencedor, sendo 1 por CPF, ou seja, o apostador não pode realizar diversas apostas iguais com o intuito de ganhar mais de um prêmio.
+Como o sistema não faz a verificação automática da validade do CPF e nome completo do apostador, este deve inserir as informações corretamento quando solicitado, sendo possibilitada a checagem e correção dos dados, caso tenha ocorrido erro de digitação.
+É de responsabilidade do apostador a correta inserção de seus dados pessoais, uma vez que estes serão conferidos no momento de retirada do prêmio.
+Os apostadores vencedores terão até cinco dias úteis, contados a partir de um dia útil após o dia de realização do sorteio final, para apresentar-se presencialmente, com documento de identificação atualizado e que contenha foto, para iniciar a retirada.
+Caso haja qualquer discrepância entre os dados pessoais informados na hora de registro da aposta e o documento apresentado na retirada, todas as apostas do referido apostador serão canceladas.
+Em não havendo vencedores, serão iniciados os procedimentos para iniciar uma nova fase de apostas.
