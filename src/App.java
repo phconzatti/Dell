@@ -230,6 +230,7 @@ public class App {
 
     //Método que realiza o sorteio dos números vencedores
     //O resultado pode possuir números repetidos, ou seja, os números são aleatórios e não serão sorteados novamente
+    int numAdd = 5;
     public void sorteio(Aposta a){
         //ArrayList <Integer> resultado = new ArrayList<Integer>();
         ArrayList <Apostador> vencedores = new ArrayList<Apostador>();
@@ -276,31 +277,44 @@ public class App {
                 result[2] = 3;
                         result[3] = 4;
                                 result[4] =5;
+                                result[20] = 30;
         ArrayList<Apostador> vencedor = new ArrayList<Apostador>();
         System.out.println("Números sorteados: "+ Arrays.toString(result));
-        int quant = 0;
-        for (int i = 0; i <aposta.compararAposta().size(); i++) {
-            int [] b = aposta.compararAposta().get(i).getAposta();
-            for (int j = 0; j < b.length; j++){
-                for (int k = 0; k < result.length; k++){
-                    if (b[i] == result[k]){
-                        quant++;
+
+        int numAd = 5;
+        for (numAd = 5; numAd < 25; numAd++) {
+            for (int i = 0; i < aposta.compararAposta().size(); i++) {
+                int quant = 0;
+                int[] b = aposta.compararAposta().get(i).getAposta();
+                for (int j = 0; j < b.length; j++) {
+                    for (int k = 0; k < result.length; k++) {
+                        if (b[i] == result[k]) {
+                            quant++;
+                            break;
+                        }
                     }
                 }
+                if (quant == 5) {
+                    vencedor.add(aposta.compararAposta().get(i));
+
+                } else {
+
+                    result[numAd] = gerar.nextInt(51);
+                    System.out.println(Arrays.toString(result));
+                    break;
+
+                }
+
+
             }
-            if (quant == 5){
-                vencedor.add(aposta.compararAposta().get(i));
+        }
+            if (vencedor.isEmpty()) {
+                System.out.println("Não há vencedores.");
+            } else {
+                System.out.println("Vencedores" + vencedor);
             }
-
-
-        }
-        if(vencedor.isEmpty()){
-            System.out.println("Não há vencedores.");
-        }else {
-            System.out.println("Vencedores"+vencedor);
-        }
-
     }
+
 
 
 
