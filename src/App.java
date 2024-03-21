@@ -31,15 +31,19 @@ public class App {
                     break;
                 case 3:
                     aposta.consultarDados();
-                    contagemNum(numeros);
+
                     break;
                 case 4:
                     sorteio(aposta);
+                    contagemNum(numeros);
                     break;
                 case 0:
                     break;
                 default:
                     System.out.println("Opção inválida. Digite uma opção válida.");
+            }
+            if (opcao == 4){
+                break;
             }
             menu();
             opcao = sc.nextInt();
@@ -231,97 +235,106 @@ public class App {
     //Método que realiza o sorteio dos números vencedores
     //O resultado pode possuir números repetidos, ou seja, os números são aleatórios e não serão sorteados novamente
     int numAdd = 5;
-    public void sorteio(Aposta a){
-        //ArrayList <Integer> resultado = new ArrayList<Integer>();
-        ArrayList <Apostador> vencedores = new ArrayList<Apostador>();
-        int[] result = new int[25];
-        //int[] result = new int[5];
-        result[0] = gerar.nextInt(51);
-        while (result[0] == 0){
+    public void sorteio(Aposta a) {
+        System.out.println("Encerrar a fase de apostas e ir para o sorteio?");
+        System.out.println("[1] Sim \n[2] Não");
+
+        int opcao = sc.nextInt();
+        switch (opcao) {
+            case 1:
+
+            //ArrayList <Integer> resultado = new ArrayList<Integer>();
+            ArrayList<Apostador> vencedores = new ArrayList<Apostador>();
+
+            int[] result = new int[5];
+            //int[] result = new int[5];
             result[0] = gerar.nextInt(51);
-        }
-
-
-        result[1] = gerar.nextInt(51);
-        if (result[1] == result[0] || result[1] == 0){
-            while (result[1] == result [0] || result[1] == 0){
-                result[1] = gerar.nextInt(51);
+            while (result[0] == 0) {
+                result[0] = gerar.nextInt(51);
             }
-        }
 
 
-        result[2] = gerar.nextInt(51);
-        if (result[2] == result[1] || result[2] == result[0] || result[2] == 0){
-            while (result[2] == result[1] || result[2] == result[0] || result[2] == 0){
-                result[2] = gerar.nextInt(51);
+            result[1] = gerar.nextInt(51);
+            if (result[1] == result[0] || result[1] == 0) {
+                while (result[1] == result[0] || result[1] == 0) {
+                    result[1] = gerar.nextInt(51);
+                }
             }
-        }
 
 
-        result[3] = gerar.nextInt(51);
-        if (result[3] == result[0] || result[3] == result[1] || result[3] == result[2] || result[3] == 0) {
-            while (result[3] == result[0] || result[3] == result[1] || result[3] == result[2] || result[3] == 0){
-                result[3] = gerar.nextInt(51);
+            result[2] = gerar.nextInt(51);
+            if (result[2] == result[1] || result[2] == result[0] || result[2] == 0) {
+                while (result[2] == result[1] || result[2] == result[0] || result[2] == 0) {
+                    result[2] = gerar.nextInt(51);
+                }
             }
-        }
 
 
-        result[4] = gerar.nextInt(51);
-        if (result[4] == result[0] || result[4] == result[1] || result[4] == result[2] || result[4] == result[3] || result[4] == 0){
-            while(result[4] == result[0] || result[4] == result[1] || result[4] == result[2] || result[4] == result[3] || result[4] == 0){
-                result[4] = gerar.nextInt(51);
+            result[3] = gerar.nextInt(51);
+            if (result[3] == result[0] || result[3] == result[1] || result[3] == result[2] || result[3] == 0) {
+                while (result[3] == result[0] || result[3] == result[1] || result[3] == result[2] || result[3] == 0) {
+                    result[3] = gerar.nextInt(51);
+                }
             }
-        }
-        result[0] = 1;
-        result[1] = 2;
-                result[2] = 3;
-                        result[3] = 4;
-                                result[4] =5;
-                                result[20] = 30;
-        ArrayList<Apostador> vencedor = new ArrayList<Apostador>();
-        System.out.println("Números sorteados: "+ Arrays.toString(result));
 
-        int numAd = 5;
-        for (numAd = 5; numAd < 25; numAd++) {
+
+            result[4] = gerar.nextInt(51);
+            if (result[4] == result[0] || result[4] == result[1] || result[4] == result[2] || result[4] == result[3] || result[4] == 0) {
+                while (result[4] == result[0] || result[4] == result[1] || result[4] == result[2] || result[4] == result[3] || result[4] == 0) {
+                    result[4] = gerar.nextInt(51);
+                }
+            }
+            //result[0] = 1;
+            //result[1] = 2;
+            //result[2] = 3;
+            //result[3] = 4;
+            //result[4] = 5;
+
+            ArrayList<Apostador> vencedor = new ArrayList<Apostador>();
+            System.out.println("Números sorteados: " + Arrays.toString(result));
+
+            int numAd = 5;
+            int v = 0;
             for (int i = 0; i < aposta.compararAposta().size(); i++) {
-                int quant = 0;
                 int[] b = aposta.compararAposta().get(i).getAposta();
+                int quant = 0;
                 for (int j = 0; j < b.length; j++) {
                     for (int k = 0; k < result.length; k++) {
                         if (b[i] == result[k]) {
                             quant++;
-                            break;
+                            //break;
                         }
                     }
                 }
                 if (quant == 5) {
                     vencedor.add(aposta.compararAposta().get(i));
-
+                    v++;
                 } else {
 
-                    result[numAd] = gerar.nextInt(51);
-                    System.out.println(Arrays.toString(result));
+                    //System.out.println(Arrays.toString(result));
                     break;
 
                 }
 
 
             }
-        }
             if (vencedor.isEmpty()) {
                 System.out.println("Não há vencedores.");
             } else {
-                System.out.println("Vencedores" + vencedor);
+                System.out.println("Vencedores:\n" + vencedor);
+                System.out.println("\nNúmero total de vencedores: " + v);
+                System.out.println("Parabéns aos vencedores!!!! Programem-se para retirar seu prêmio!!!!!");
             }
+            break;
+            case 2:
+                break;
+            default:
+                System.out.println("Opção inválida. Digite uma opção válida.");
+
+        }
     }
 
 
-
-
-
-    //Método que vai contar as repetições dos números apostados
-    //Referência para a criação do método https://www.paradoxofinal.com.br/2011/06/arrays-elementos-repetidos-e-numero-de.html. Acesso em 19/03/2024
-    private boolean encontrou;
     public void contagemNum(ArrayList <Integer> n){
         ArrayList<Numeros> lista = new ArrayList<Numeros>(50);
         for (int k = 1; k <= 50; k++) {
@@ -329,7 +342,9 @@ public class App {
             lista.add(n1);
         }
         for (int i = 0; i< n.size(); i++){
-            encontrou = false;
+            //Método que vai contar as repetições dos números apostados
+            //Referência para a criação do método https://www.paradoxofinal.com.br/2011/06/arrays-elementos-repetidos-e-numero-de.html. Acesso em 19/03/2024
+            boolean encontrou = false;
             for (int j = 0; j < lista.size(); j++){
                 //lista.get(j).setValor(j);
                 if (n.get(i).equals(lista.get(j).getValor())){
